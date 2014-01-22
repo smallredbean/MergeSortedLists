@@ -1,3 +1,6 @@
+#ifndef __MY_MERGE_SORTED_LISTS_H__
+#define __MY_MERGE_SORTED_LISTS_H__
+
 #include <algorithm>
 #include <vector>
 
@@ -81,3 +84,4 @@ void my_merge_sorted_lists(
 
 	my_merge_sorted_lists<Compare>(inputs, output_list);
 }
+#endif
