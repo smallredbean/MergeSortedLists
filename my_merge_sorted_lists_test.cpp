@@ -13,7 +13,7 @@ using std::vector;
 
 
 void manual_unit_test(
-	const vector<const vector<int>> &input_sorted_lists,
+	const vector< vector<int> > &input_sorted_lists,
 	const vector<int> &expected_results)
 {
 	vector<int> output;
@@ -32,7 +32,7 @@ void manual_unit_tests(void)
 	vector<int> v4({2, 4, 12, 13});
 	vector<int> v5({5, 6, 7, 8, 14, 15, 16, 17});
 	vector<int> output;
-	vector<const vector<int>> sorted_lists;
+	vector< vector<int> > sorted_lists;
 
 	// A non-empty list w. more than one element
 	sorted_lists.push_back(v1);
