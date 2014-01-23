@@ -8,8 +8,8 @@ using std::endl;
 
 template <class RandomAccessIterator>
 void print_container(
-    RandomAccessIterator first,
-    RandomAccessIterator last)
+	RandomAccessIterator first,
+	RandomAccessIterator last)
 {
 	for(auto it=first; it!=last; ++it)
 		cout << *it << ", ";
