@@ -17,6 +17,20 @@
  * The time complexity is O(M * logN) where M is the size of the
  * final sorted list.
  */
+
+template <class Compare, class SortedListInIteratorPair>
+class CompareFunction{
+private:
+	Compare comp;
+
+public:
+	bool operator()(const SortedListInIteratorPair &p1, const SortedListInIteratorPair &p2)
+	{
+		return comp(*(p1.first), *(p2.first));
+	}
+};
+
+
 template <class Compare, class SortedListIterator, class OutputContainer>
 void my_merge_sorted_lists(
 	std::vector< std::pair<SortedListIterator, SortedListIterator> > sorted_lists_in_iterator_pair,
@@ -26,12 +40,7 @@ void my_merge_sorted_lists(
 		return;
 
 	typedef std::pair<SortedListIterator, SortedListIterator> SortedListInIteratorPair;
-	auto compare_func = [](
-		const SortedListInIteratorPair &p1,
-		const SortedListInIteratorPair &p2
-	){
-		return Compare()(*(p1.first), *(p2.first));
-   	};
+	auto compare_func = CompareFunction<Compare, SortedListInIteratorPair>();
 
 	// Heap is used to track which sorted list has the next data
 	// going into `output_list` in O(logN) of time
