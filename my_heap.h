@@ -17,8 +17,8 @@ template <class RandomAccessIterator, class T, class Compare>
 void replace_heap(
 	RandomAccessIterator first,
 	RandomAccessIterator last,
-	T data,
-	Compare comp)
+	const T &data,
+	const Compare &comp)
 {
 	if(last-first<=1)
 		return;
@@ -27,7 +27,7 @@ void replace_heap(
 	std::pop_heap(first, last, comp);
 }
 template <class RandomAccessIterator, class T>
-void replace_heap(RandomAccessIterator first, RandomAccessIterator last, T data)
+void replace_heap(RandomAccessIterator first, RandomAccessIterator last, const T &data)
 {
 	replace_heap(first, last, data, std::less<T>());
 }
@@ -44,8 +44,8 @@ template <class RandomAccessIterator, class T, class Compare>
 void pushpop_heap(
 	RandomAccessIterator first,
 	RandomAccessIterator last,
-	T data,
-	Compare comp)
+	const T &data,
+	const Compare &comp)
 {
 	if(last-first<=1)
 		return;
@@ -55,7 +55,7 @@ void pushpop_heap(
 	replace_heap(first, last, data, comp);
 }
 template <class RandomAccessIterator, class T>
-void pushpop_heap(RandomAccessIterator first, RandomAccessIterator last, T data)
+void pushpop_heap(RandomAccessIterator first, RandomAccessIterator last, const T &data)
 {
 	pushpop_heap(first, last, data, std::less<T>());
 }

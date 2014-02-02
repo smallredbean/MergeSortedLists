@@ -24,7 +24,7 @@ private:
 	Compare comp;
 
 public:
-	bool operator()(const SortedListInIteratorPair &p1, const SortedListInIteratorPair &p2)
+	bool operator()(const SortedListInIteratorPair &p1, const SortedListInIteratorPair &p2) const
 	{
 		return comp(*(p1.first), *(p2.first));
 	}
@@ -88,7 +88,7 @@ void my_merge_sorted_lists(
 
 	for(auto it=sorted_lists_begin; it!=sorted_lists_end; ++it)
 		inputs.push_back(
-			SortedListInIteratorPair(it->begin(), it->end())
+			SortedListInIteratorPair(it->cbegin(), it->cend())
 		);
 
 	my_merge_sorted_lists<Compare>(inputs, output_list);
