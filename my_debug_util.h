@@ -11,8 +11,9 @@ void print_container(
 	const RandomAccessIterator first,
 	const RandomAccessIterator last)
 {
-	for(auto it=first; it!=last; ++it)
+	for (auto it = first; it != last; ++it) {
 		cout << *it << ", ";
+	}
 	cout << endl;
 }
 

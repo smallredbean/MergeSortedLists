@@ -21,7 +21,7 @@ void manual_unit_test(
 		input_sorted_lists.cbegin(),
 		input_sorted_lists.cend(),
 		output);
-	assert(output==expected_results);
+	assert(output == expected_results);
 }
 
 void manual_unit_tests(void)
@@ -98,32 +98,35 @@ void random_unit_tests(void)
 {
 	srandom(time(NULL));
 
-	const int NUM_LIST=50;
-	const int MAX_LIST_SIZE=10;
-	const int NUM_TEST=10;
+	const int NUM_LIST = 50;
+	const int MAX_LIST_SIZE = 10;
+	const int NUM_TEST = 10;
 
 	vector< vector<int> > sorted_lists(NUM_LIST);
-	for(auto num_test_case=NUM_TEST; num_test_case; --num_test_case){
+	for (auto num_test_case = NUM_TEST; num_test_case; --num_test_case) {
 		// Fill & sort lists
-		for(auto it=sorted_lists.begin(); it!=sorted_lists.end(); ++it){
-			for(auto size=random()%MAX_LIST_SIZE; size; --size)
+		for (auto it = sorted_lists.begin(); it != sorted_lists.end(); ++it) {
+			for (auto size = random() % MAX_LIST_SIZE; size; --size) {
 				it->push_back(random());
+			}
 			sort(it->begin(), it->end(), less<int>());
 		}
 
 		// Test merging k lists
-		for(auto k=NUM_LIST; k; --k){
-			for(auto it=sorted_lists.begin(); it+k<=sorted_lists.end(); ++it){
+		for (auto k = NUM_LIST; k; --k) {
+			for (auto it = sorted_lists.begin(); it + k <= sorted_lists.end(); ++it) {
 				vector<int> output;
-				my_merge_sorted_lists< greater<int>, vector<int> >(it, it+k, output);
+				my_merge_sorted_lists< greater<int>, vector<int> >(it, it + k, output);
 				
 				vector<int> expected_results;
-				for(auto it_list=it; it_list!=it+k; ++it_list)
-					for(auto it_data=it_list->begin(); it_data!=it_list->end(); ++it_data)
+				for (auto it_list = it; it_list != it + k; ++it_list) {
+					for (auto it_data = it_list->begin(); it_data != it_list->end(); ++it_data) {
 						expected_results.push_back(*it_data);
+					}
+				}
 				sort(expected_results.begin(), expected_results.end(), less<int>());
 
-				assert(output==expected_results);
+				assert(output == expected_results);
 			}
 		}
 	}

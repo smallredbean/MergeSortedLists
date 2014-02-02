@@ -36,8 +36,9 @@ void my_merge_sorted_lists(
 	std::vector< std::pair<SortedListIterator, SortedListIterator> > sorted_lists_in_iterator_pair,
 	OutputContainer &output_list)
 {
-	if(sorted_lists_in_iterator_pair.empty())
+	if (sorted_lists_in_iterator_pair.empty()) {
 		return;
+	}
 
 	typedef std::pair<SortedListIterator, SortedListIterator> SortedListInIteratorPair;
 	auto compare_func = CompareFunction<Compare, SortedListInIteratorPair>();
@@ -48,25 +49,28 @@ void my_merge_sorted_lists(
 	auto heap_size = heap.size();
 	heap.push_back(heap.front()); // Extra space for replace_heap/pushpop_heap
 
-	auto heap_end = heap.end()-1;
-	for(auto it=heap.begin(); it<heap_end; ++it)
-		if(it->first>=it->second){ // Empty or invalid list
+	auto heap_end = heap.end() - 1;
+	for (auto it = heap.begin(); it < heap_end; ++it) {
+		if (it->first >= it->second) { // Empty or invalid list
 			*it = *(--heap_end); // Exclude it by copying one from the back
 			--heap_size;
 			--it; // So that the newly copied one would be checked
 		}
+	}
 	
 	std::make_heap(heap.begin(), heap.begin()+heap_size, compare_func);
 
-	while(heap_size>0){
+	while (heap_size > 0) {
 		output_list.push_back(*(heap.front().first++));
 
 		auto heap_begin = heap.begin();
-		if(heap_begin->first==heap_begin->second)
+		if (heap_begin->first == heap_begin->second) {
 			// The list has no more data, remove it from the heap
-			pop_heap(heap_begin, heap_begin+(heap_size--), compare_func);
-		else
-			replace_heap(heap_begin, heap_begin+heap_size+1, *heap_begin, compare_func);
+			pop_heap(heap_begin, heap_begin + (heap_size--), compare_func);
+		}
+		else {
+			replace_heap(heap_begin, heap_begin + heap_size + 1, *heap_begin, compare_func);
+		}
 	}
 }
 
@@ -77,8 +81,9 @@ void my_merge_sorted_lists(
 	const SortedListsIterator sorted_lists_end,
 	OutputContainer &output_list)
 {
-	if(sorted_lists_begin==sorted_lists_end)
+	if (sorted_lists_begin >= sorted_lists_end) {
 		return;
+	}
 
 	typedef std::pair<
 		typename SortedList::const_iterator,
@@ -86,10 +91,11 @@ void my_merge_sorted_lists(
 	> SortedListInIteratorPair;
 	std::vector<SortedListInIteratorPair> inputs;
 
-	for(auto it=sorted_lists_begin; it!=sorted_lists_end; ++it)
+	for (auto it = sorted_lists_begin; it != sorted_lists_end; ++it) {
 		inputs.push_back(
 			SortedListInIteratorPair(it->cbegin(), it->cend())
 		);
+	}
 
 	my_merge_sorted_lists<Compare>(inputs, output_list);
 }

@@ -20,10 +20,11 @@ void replace_heap(
 	const T &data,
 	const Compare &comp)
 {
-	if(last-first<=1)
+	if (last - first <= 1) {
 		return;
+	}
 
-	*(last-1) = data;
+	*(last - 1) = data;
 	std::pop_heap(first, last, comp);
 }
 template <class RandomAccessIterator, class T>
@@ -47,10 +48,12 @@ void pushpop_heap(
 	const T &data,
 	const Compare &comp)
 {
-	if(last-first<=1)
+	if (last - first <= 1) {
 		return;
-	if(comp(*first, data))
+	}
+	if (comp(*first, data)) {
 		 return;
+	}
 
 	replace_heap(first, last, data, comp);
 }
