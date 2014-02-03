@@ -87,7 +87,7 @@ void my_merge_sorted_lists(
 
 	typedef std::pair<
 		typename SortedList::const_iterator,
-   		typename SortedList::const_iterator
+		typename SortedList::const_iterator
 	> SortedListInIteratorPair;
 	std::vector<SortedListInIteratorPair> inputs;
 
