@@ -81,7 +81,7 @@ void my_merge_sorted_lists(
 	const SortedListsIterator sorted_lists_end,
 	OutputContainer &output_list)
 {
-	if (sorted_lists_begin >= sorted_lists_end) {
+	if (sorted_lists_begin == sorted_lists_end) {
 		return;
 	}
 
