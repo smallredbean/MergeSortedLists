@@ -11,76 +11,6 @@ using std::vector;
 
 #include "my_heap.h"
 
-void manual_unit_test_replace_heap(void)
-{
-	int myints[] = {10, 20, 30, 5, 15};
-	vector<int> v(myints, myints + 5);
-	make_heap(v.begin(), v.end());
-	assert(v == vector<int>({30, 15, 20, 5, 10}));
-
-	// Do replace_heap() w. data > current-max (i.e. 30)
-	v.push_back(0); // Extra space for replace_heap & pushpop_heap
-	replace_heap(v.begin(), v.end(), 35);
-	v.pop_back();
-	assert(v == vector<int>({35, 15, 20, 5, 10}));
-
-	// Do replace_heap() w. data > new-max (i.e., 20)
-	v.push_back(0); // Extra space for replace_heap & pushpop_heap
-	replace_heap(v.begin(), v.end(), 21);
-	v.pop_back();
-	assert(v == vector<int>({21, 15, 20, 5, 10}));
-
-	// Do replace_heap() w. data would go all the way down to the right subtree
-	v.push_back(0); // Extra space for replace_heap & pushpop_heap
-	replace_heap(v.begin(), v.end(), 14);
-	v.pop_back();
-	assert(v == vector<int>({20, 15, 14, 5, 10}));
-
-	// Do replace_heap() w. data would go all the way down to the left subtree
-	v.push_back(0); // Extra space for replace_heap & pushpop_heap
-	replace_heap(v.begin(), v.end(), 8);
-	v.pop_back();
-	assert(v == vector<int>({15, 10, 14, 5, 8}));
-}
-
-void manual_unit_test_pushpop_heap(void)
-{
-	int myints[] = {10, 20, 30, 5, 15};
-	vector<int> v(myints, myints + 5);
-	make_heap(v.begin(), v.end());
-	assert(v == vector<int>({30, 15, 20, 5, 10}));
-
-	// Do pushpop_heap() w. data > current-max (i.e. 30)
-	v.push_back(0); // Extra space for replace_heap & pushpop_heap
-	pushpop_heap(v.begin(), v.end(), 35);
-	v.pop_back();
-	assert(v == vector<int>({30, 15, 20, 5, 10}));
-
-	// Do pushpop_heap() w. data replace only the current-max
-	v.push_back(0); // Extra space for replace_heap & pushpop_heap
-	pushpop_heap(v.begin(), v.end(), 21);
-	v.pop_back();
-	assert(v == vector<int>({21, 15, 20, 5, 10}));
-
-	// Do pushpop_heap() w. data would go all the way down to the right subtree
-	v.push_back(0); // Extra space for replace_heap & pushpop_heap
-	pushpop_heap(v.begin(), v.end(), 14);
-	v.pop_back();
-	assert(v == vector<int>({20, 15, 14, 5, 10}));
-
-	// Do pushpop_heap() w. data would go all the way down to the left subtree
-	v.push_back(0); // Extra space for replace_heap & pushpop_heap
-	pushpop_heap(v.begin(), v.end(), 8);
-	v.pop_back();
-	assert(v == vector<int>({15, 10, 14, 5, 8}));
-}
-
-void manual_unit_tests(void)
-{
-	manual_unit_test_replace_heap();
-	manual_unit_test_pushpop_heap();
-}
-
 
 bool has_same_elements(const vector<int> &_v1, const vector<int> &_v2)
 {
@@ -98,6 +28,74 @@ bool is_heapified(const vector<int> &heap)
 	make_heap(tmp.begin(), tmp.end());
 
 	return heap == tmp;
+}
+
+void manual_unit_test_replace_heap(void)
+{
+	vector<int> v({5, 10, 15, 20, 30});
+	make_heap(v.begin(), v.end());
+	assert(has_same_elements({5, 10, 15, 20, 30}, v) && is_heapified(v));
+
+	// Do replace_heap() w. data > current-max (i.e. 30)
+	v.push_back(0); // Extra space for replace_heap & pushpop_heap
+	replace_heap(v.begin(), v.end(), 35);
+	v.pop_back();
+	assert(has_same_elements({5, 10, 15, 20, 35}, v) && is_heapified(v));
+
+	// Do replace_heap() w. data > new-max (i.e., 20)
+	v.push_back(0); // Extra space for replace_heap & pushpop_heap
+	replace_heap(v.begin(), v.end(), 21);
+	v.pop_back();
+	assert(has_same_elements({5, 10, 15, 20, 21}, v) && is_heapified(v));
+
+	// Do replace_heap() w. data would go all the way down to the right subtree
+	v.push_back(0); // Extra space for replace_heap & pushpop_heap
+	replace_heap(v.begin(), v.end(), 14);
+	v.pop_back();
+	assert(has_same_elements({5, 10, 14, 15, 20}, v) && is_heapified(v));
+
+	// Do replace_heap() w. data would go all the way down to the left subtree
+	v.push_back(0); // Extra space for replace_heap & pushpop_heap
+	replace_heap(v.begin(), v.end(), 8);
+	v.pop_back();
+	assert(has_same_elements({5, 8, 10, 14, 15}, v) && is_heapified(v));
+}
+
+void manual_unit_test_pushpop_heap(void)
+{
+	vector<int> v({5, 10, 15, 20, 30});
+	make_heap(v.begin(), v.end());
+	assert(has_same_elements({5, 10, 15, 20, 30}, v) && is_heapified(v));
+
+	// Do pushpop_heap() w. data > current-max (i.e. 30)
+	v.push_back(0); // Extra space for replace_heap & pushpop_heap
+	pushpop_heap(v.begin(), v.end(), 35);
+	v.pop_back();
+	assert(has_same_elements({5, 10, 15, 20, 30}, v) && is_heapified(v));
+
+	// Do pushpop_heap() w. data replace only the current-max
+	v.push_back(0); // Extra space for replace_heap & pushpop_heap
+	pushpop_heap(v.begin(), v.end(), 21);
+	v.pop_back();
+	assert(has_same_elements({5, 10, 15, 20, 21}, v) && is_heapified(v));
+
+	// Do pushpop_heap() w. data would go all the way down to the right subtree
+	v.push_back(0); // Extra space for replace_heap & pushpop_heap
+	pushpop_heap(v.begin(), v.end(), 14);
+	v.pop_back();
+	assert(has_same_elements({5, 10, 14, 15, 20}, v) && is_heapified(v));
+
+	// Do pushpop_heap() w. data would go all the way down to the left subtree
+	v.push_back(0); // Extra space for replace_heap & pushpop_heap
+	pushpop_heap(v.begin(), v.end(), 8);
+	v.pop_back();
+	assert(has_same_elements({5, 8, 10, 14, 15}, v) && is_heapified(v));
+}
+
+void manual_unit_tests(void)
+{
+	manual_unit_test_replace_heap();
+	manual_unit_test_pushpop_heap();
 }
 
 void random_test(const int HEAP_SIZE = 10)
@@ -147,7 +145,6 @@ void random_unit_tests(void)
 		random_test(NUM_TEST);
 	}
 }
-
 
 int main(int argc, char **argv)
 {
