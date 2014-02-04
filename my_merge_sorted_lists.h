@@ -6,9 +6,12 @@
 
 #include "my_heap.h"
 
-/* Merge N sorted lists (denoted by its "begin" and "end" iterator) into
+/* Merge N sorted lists (denoted by its "begin" and "end" iterators) into
  * one sorted list (stored into `output_list`); `output_list` can be any data
  * structure given supporting "push_back()" function call.
+ *
+ * Using begin/end iterators for merging allows the input sorted lists remain
+ * (the contents won't be altered after merging).
  *
  * This merging involves heap sort and the heapification is based on `Compare`;
  * `Compare` is NOT for sorting. In general, for lists that are sorted using
@@ -49,26 +52,41 @@ void my_merge_sorted_lists(
 	auto heap_size = heap.size();
 	heap.push_back(heap.front()); // Extra space for replace_heap/pushpop_heap
 
+	// Initial check on lists
 	auto heap_end = heap.end() - 1;
 	for (auto it = heap.begin(); it < heap_end; ++it) {
-		if (it->first >= it->second) { // Empty or invalid list
-			*it = *(--heap_end); // Exclude it by copying one from the back
+		if (it->first >= it->second) { // Empty or invalid list, Remove It:
+			// 1. Replace it with the last one & update the end pointer
+			// The following line of code is equivalent to (optimization trick!)
+			//	 *it = *(heap_end - 1);
+			//	 heap_end -= 1;
+			*it = *(--heap_end);
+			// 2. Update relevant variables
 			--heap_size;
-			--it; // So that the newly copied one would be checked
+			// 3. Recheck this newly copied list in the next iteration
+			--it;
 		}
 	}
-	
-	std::make_heap(heap.begin(), heap.begin()+heap_size, compare_func);
 
+	// Make a heap
+	std::make_heap(heap.begin(), heap.begin() + heap_size, compare_func);
+
+	// Iterate through until all lists are merged in
 	while (heap_size > 0) {
-		output_list.push_back(*(heap.front().first++));
+		// The next element to output_list is pointed by heap.front().first
+		output_list.push_back(*(heap.front().first));
+		// Then, the list heap.front() "pushes"* its next element to the heap by
+		// moving its begin iterator to the next element.
+		++heap.front().first;
 
 		auto heap_begin = heap.begin();
 		if (heap_begin->first == heap_begin->second) {
 			// The list has no more data, remove it from the heap
-			pop_heap(heap_begin, heap_begin + (heap_size--), compare_func);
+			std::pop_heap(heap_begin, heap_begin + heap_size, compare_func);
+			--heap_size;
 		}
 		else {
+			// Pop old (ignore it) and push new (the above *); new data at heap.front()
 			replace_heap(heap_begin, heap_begin + heap_size + 1, *heap_begin, compare_func);
 		}
 	}
