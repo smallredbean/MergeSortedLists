@@ -1,5 +1,5 @@
-#ifndef __MY_MERGE_SORTED_LISTS_H__
-#define __MY_MERGE_SORTED_LISTS_H__
+#ifndef __MY_N_WAY_MERGE_H__
+#define __MY_N_WAY_MERGE_H__
 
 #include <algorithm>
 #include <vector>
@@ -35,7 +35,7 @@ public:
 
 
 template <class Compare, class SortedListIterator, class OutputContainer>
-void my_merge_sorted_lists(
+void my_n_way_merge(
 	std::vector< std::pair<SortedListIterator, SortedListIterator> > sorted_lists_in_iterator_pair,
 	OutputContainer &output_list)
 {
@@ -94,7 +94,7 @@ void my_merge_sorted_lists(
 
 
 template <class Compare, class SortedList, class SortedListsIterator, class OutputContainer>
-void my_merge_sorted_lists(
+void my_n_way_merge(
 	const SortedListsIterator sorted_lists_begin,
 	const SortedListsIterator sorted_lists_end,
 	OutputContainer &output_list)
@@ -115,6 +115,6 @@ void my_merge_sorted_lists(
 		);
 	}
 
-	my_merge_sorted_lists<Compare>(inputs, output_list);
+	my_n_way_merge<Compare>(inputs, output_list);
 }
 #endif

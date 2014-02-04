@@ -8,7 +8,7 @@ using std::vector;
 #include <stdlib.h>
 #include <time.h>
 
-#include "my_merge_sorted_lists.h"
+#include "my_n_way_merge.h"
 #include "my_debug_util.h"
 
 
@@ -17,7 +17,7 @@ void manual_unit_test(
 	const vector<int> &expected_results)
 {
 	vector<int> output;
-	my_merge_sorted_lists< greater<int>, vector<int> >(
+	my_n_way_merge< greater<int>, vector<int> >(
 		input_sorted_lists.cbegin(),
 		input_sorted_lists.cend(),
 		output);
@@ -116,7 +116,7 @@ void random_unit_tests(void)
 		for (auto k = NUM_LIST; k; --k) {
 			for (auto it = sorted_lists.begin(); it + k <= sorted_lists.end(); ++it) {
 				vector<int> output;
-				my_merge_sorted_lists< greater<int>, vector<int> >(it, it + k, output);
+				my_n_way_merge< greater<int>, vector<int> >(it, it + k, output);
 				
 				vector<int> expected_results;
 				for (auto it_list = it; it_list != it + k; ++it_list) {
